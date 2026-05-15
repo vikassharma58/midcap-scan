@@ -2,7 +2,7 @@ name: Daily Divergence Scan
 
 on:
   schedule:
-    - cron: '15 10 * * 1-5'   # 3:45 PM IST (10:15 UTC), Mon–Fri after market close
+    - cron: '0 13 * * 1-5'    # 6:30 PM IST (13:00 UTC), Mon–Fri
   workflow_dispatch:            # also allows manual trigger from GitHub UI
 
 permissions:
