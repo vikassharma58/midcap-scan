@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nifty Midcap 150 - RSI Divergence Scanner</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; padding: 24px; }
+  .header { text-align: center; margin-bottom: 32px; }
+  .header h1 { font-size: 24px; font-weight: 800; color: #f8fafc; letter-spacing: -0.5px; }
+  .header p { color: #94a3b8; margin-top: 6px; font-size: 13px; }
+  .stats { display: flex; gap: 16px; justify-content: center; margin-bottom: 32px; flex-wrap: wrap; }
+  .stat { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 16px 28px; text-align: center; }
+  .stat .num { font-size: 28px; font-weight: 800; }
+  .stat .lbl { font-size: 12px; color: #94a3b8; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .bullish .num { color: #4ade80; }
+  .bearish .num { color: #f87171; }
+  .neutral .num { color: #60a5fa; }
+  .section { background: #1e293b; border: 1px solid #334155; border-radius: 16px; margin-bottom: 28px; overflow: hidden; }
+  .section-header { padding: 16px 20px; border-bottom: 1px solid #334155; display: flex; align-items: center; gap: 10px; }
+  .section-header h2 { font-size: 16px; font-weight: 700; }
+  .bullish-header { background: rgba(34,197,94,0.1); }
+  .bullish-header h2 { color: #4ade80; }
+  .bearish-header { background: rgba(239,68,68,0.1); }
+  .bearish-header h2 { color: #f87171; }
+  table { width: 100%; border-collapse: collapse; }
+  th { padding: 10px 14px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; background: #0f172a; border-bottom: 1px solid #334155; }
+  td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  tr:last-child td { border-bottom: none; }
+  .footer { text-align: center; color: #475569; font-size: 12px; margin-top: 24px; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+  .dot-green { background: #4ade80; }
+  .dot-red { background: #f87171; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Nifty Midcap 150 &mdash; RSI(14) Hourly Divergence Scanner</h1>
+  <p>Run: 15 May 2026, 05:44 PM IST &nbsp;|&nbsp; Stocks scanned: 176/187 &nbsp;|&nbsp; Filter: current price within 5% of divergence origin</p>
+</div>
+
+<div class="stats">
+  <div class="stat bullish"><div class="num">43</div><div class="lbl">Bullish Signals</div></div>
+  <div class="stat bearish"><div class="num">22</div><div class="lbl">Bearish Signals</div></div>
+  <div class="stat neutral"><div class="num">176</div><div class="lbl">Stocks Scanned</div></div>
+</div>
+
+<div class="section">
+  <div class="section-header bullish-header">
+    <span class="dot dot-green"></span>
+    <h2>Bullish Divergences (43)</h2>
+    <span style="margin-left:auto;font-size:12px;color:#4ade80;">Price lower low &amp; RSI higher low &rarr; potential reversal up</span>
+  </div>
+  <table>
+    <thead><tr><th>Symbol</th><th>Signal</th><th>Origin Price</th><th>Current Price</th><th>Distance</th><th>RSI @ Origin</th><th>Current RSI</th><th>Pivot Time</th></tr></thead>
+    <tbody>
+            <tr style="background:rgba(34,197,94,0.35);">
+              <td style="font-weight:700;font-size:14px;">CENTRALBK</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;34.22</td>
+              <td>&#8377;34.22</td>
+              <td><b>0.00%</b></td>
+              <td>22.3</td>
+              <td>32.2</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.35);">
+              <td style="font-weight:700;font-size:14px;">CANBK</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;128.05</td>
+              <td>&#8377;128.10</td>
+              <td><b>0.04%</b></td>
+              <td>36.0</td>
+              <td>39.1</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.35);">
+              <td style="font-weight:700;font-size:14px;">KAJARIACER</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;1,064.00</td>
+              <td>&#8377;1,064.40</td>
+              <td><b>0.04%</b></td>
+              <td>35.6</td>
+              <td>41.9</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 14:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.34);">
+              <td style="font-weight:700;font-size:14px;">BANDHANBNK</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;194.70</td>
+              <td>&#8377;194.46</td>
+              <td><b>0.12%</b></td>
+              <td>31.8</td>
+              <td>37.1</td>
+              <td style="font-size:11px;color:#666;">2026-05-13 15:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.34);">
+              <td style="font-weight:700;font-size:14px;">TRIDENT</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;24.65</td>
+              <td>&#8377;24.68</td>
+              <td><b>0.12%</b></td>
+              <td>33.6</td>
+              <td>36.7</td>
+              <td style="font-size:11px;color:#666;">2026-05-15 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.34);">
+              <td style="font-weight:700;font-size:14px;">LINDEINDIA</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;7,359.50</td>
+              <td>&#8377;7,370.00</td>
+              <td><b>0.14%</b></td>
+              <td>29.4</td>
+              <td>36.7</td>
+              <td style="font-size:11px;color:#666;">2026-05-13 14:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.34);">
+              <td style="font-weight:700;font-size:14px;">POONAWALLA</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;413.85</td>
+              <td>&#8377;413.10</td>
+              <td><b>0.18%</b></td>
+              <td>29.8</td>
+              <td>34.6</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.34);">
+              <td style="font-weight:700;font-size:14px;">IDFCFIRSTB</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;67.55</td>
+              <td>&#8377;67.68</td>
+              <td><b>0.19%</b></td>
+              <td>35.6</td>
+              <td>43.8</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.33);">
+              <td style="font-weight:700;font-size:14px;">CANBK</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;128.59</td>
+              <td>&#8377;128.10</td>
+              <td><b>0.38%</b></td>
+              <td>35.5</td>
+              <td>39.1</td>
+              <td style="font-size:11px;color:#666;">2026-05-13 09:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.33);">
+              <td style="font-weight:700;font-size:14px;">TRIDENT</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;24.78</td>
+              <td>&#8377;24.68</td>
+              <td><b>0.40%</b></td>
+              <td>28.8</td>
+              <td>36.7</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.33);">
+              <td style="font-weight:700;font-size:14px;">KAJARIACER</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;1,069.10</td>
+              <td>&#8377;1,064.40</td>
+              <td><b>0.44%</b></td>
+              <td>33.6</td>
+              <td>41.9</td>
+              <td style="font-size:11px;color:#666;">2026-05-13 14:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.33);">
+              <td style="font-weight:700;font-size:14px;">INDUSINDBK</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;890.45</td>
+              <td>&#8377;886.40</td>
+              <td><b>0.45%</b></td>
+              <td>34.5</td>
+              <td>36.7</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.33);">
+              <td style="font-weight:700;font-size:14px;">AUBANK</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;991.00</td>
+              <td>&#8377;995.80</td>
+              <td><b>0.48%</b></td>
+              <td>34.0</td>
+              <td>46.4</td>
+              <td style="font-size:11px;color:#666;">2026-05-13 15:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.32);">
+              <td style="font-weight:700;font-size:14px;">IDBI</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;70.77</td>
+              <td>&#8377;70.40</td>
+              <td><b>0.52%</b></td>
+              <td>24.4</td>
+              <td>30.4</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.32);">
+              <td style="font-weight:700;font-size:14px;">SBICARD</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;621.60</td>
+              <td>&#8377;625.00</td>
+              <td><b>0.55%</b></td>
+              <td>33.9</td>
+              <td>41.0</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.32);">
+              <td style="font-weight:700;font-size:14px;">IRCTC</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;532.00</td>
+              <td>&#8377;535.65</td>
+              <td><b>0.69%</b></td>
+              <td>33.2</td>
+              <td>39.6</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.31);">
+              <td style="font-weight:700;font-size:14px;">CHOLAFIN</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;1,555.00</td>
+              <td>&#8377;1,543.30</td>
+              <td><b>0.75%</b></td>
+              <td>29.3</td>
+              <td>32.0</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.31);">
+              <td style="font-weight:700;font-size:14px;">AARTIIND</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;462.75</td>
+              <td>&#8377;466.25</td>
+              <td><b>0.76%</b></td>
+              <td>27.5</td>
+              <td>38.9</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 09:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.31);">
+              <td style="font-weight:700;font-size:14px;">SUPREMEIND</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;3,485.80</td>
+              <td>&#8377;3,513.00</td>
+              <td><b>0.78%</b></td>
+              <td>29.2</td>
+              <td>41.4</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.31);">
+              <td style="font-weight:700;font-size:14px;">BRIGADE</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;682.40</td>
+              <td>&#8377;688.25</td>
+              <td><b>0.86%</b></td>
+              <td>14.4</td>
+              <td>29.4</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.30);">
+              <td style="font-weight:700;font-size:14px;">IEX</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;126.41</td>
+              <td>&#8377;125.25</td>
+              <td><b>0.92%</b></td>
+              <td>32.1</td>
+              <td>34.6</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.30);">
+              <td style="font-weight:700;font-size:14px;">TVSHLTD</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;13,716.00</td>
+              <td>&#8377;13,844.00</td>
+              <td><b>0.93%</b></td>
+              <td>31.1</td>
+              <td>43.1</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 09:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.30);">
+              <td style="font-weight:700;font-size:14px;">RECLTD</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;342.55</td>
+              <td>&#8377;346.00</td>
+              <td><b>1.01%</b></td>
+              <td>34.9</td>
+              <td>43.9</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.30);">
+              <td style="font-weight:700;font-size:14px;">RAJESHEXPO</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;108.85</td>
+              <td>&#8377;110.00</td>
+              <td><b>1.06%</b></td>
+              <td>34.5</td>
+              <td>41.6</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 14:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.30);">
+              <td style="font-weight:700;font-size:14px;">KSCL</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;928.35</td>
+              <td>&#8377;918.35</td>
+              <td><b>1.08%</b></td>
+              <td>28.2</td>
+              <td>28.9</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 09:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.29);">
+              <td style="font-weight:700;font-size:14px;">GLENMARK</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;2,349.70</td>
+              <td>&#8377;2,321.20</td>
+              <td><b>1.21%</b></td>
+              <td>32.7</td>
+              <td>47.2</td>
+              <td style="font-size:11px;color:#666;">2026-05-08 09:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.28);">
+              <td style="font-weight:700;font-size:14px;">GAIL</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;159.89</td>
+              <td>&#8377;162.15</td>
+              <td><b>1.41%</b></td>
+              <td>34.8</td>
+              <td>47.8</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.28);">
+              <td style="font-weight:700;font-size:14px;">DALBHARAT</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;1,746.90</td>
+              <td>&#8377;1,722.00</td>
+              <td><b>1.43%</b></td>
+              <td>33.9</td>
+              <td>29.9</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.27);">
+              <td style="font-weight:700;font-size:14px;">VSTIND</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;256.35</td>
+              <td>&#8377;260.20</td>
+              <td><b>1.50%</b></td>
+              <td>39.1</td>
+              <td>57.2</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.27);">
+              <td style="font-weight:700;font-size:14px;">DALBHARAT</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;1,749.10</td>
+              <td>&#8377;1,722.00</td>
+              <td><b>1.55%</b></td>
+              <td>29.1</td>
+              <td>29.9</td>
+              <td style="font-size:11px;color:#666;">2026-05-13 09:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.27);">
+              <td style="font-weight:700;font-size:14px;">GRANULES</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;725.95</td>
+              <td>&#8377;737.25</td>
+              <td><b>1.56%</b></td>
+              <td>38.4</td>
+              <td>49.0</td>
+              <td style="font-size:11px;color:#666;">2026-05-13 15:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.27);">
+              <td style="font-weight:700;font-size:14px;">PHOENIXLTD</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;1,710.60</td>
+              <td>&#8377;1,738.50</td>
+              <td><b>1.63%</b></td>
+              <td>30.4</td>
+              <td>43.9</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.26);">
+              <td style="font-weight:700;font-size:14px;">TVSMOTOR</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;3,406.40</td>
+              <td>&#8377;3,467.00</td>
+              <td><b>1.78%</b></td>
+              <td>32.6</td>
+              <td>44.2</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 09:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.26);">
+              <td style="font-weight:700;font-size:14px;">VOLTAS</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;1,256.70</td>
+              <td>&#8377;1,234.00</td>
+              <td><b>1.81%</b></td>
+              <td>31.4</td>
+              <td>36.3</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 09:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.25);">
+              <td style="font-weight:700;font-size:14px;">TANLA</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;507.60</td>
+              <td>&#8377;497.50</td>
+              <td><b>1.99%</b></td>
+              <td>24.4</td>
+              <td>24.3</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.25);">
+              <td style="font-weight:700;font-size:14px;">GPIL</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;282.05</td>
+              <td>&#8377;287.90</td>
+              <td><b>2.07%</b></td>
+              <td>21.9</td>
+              <td>45.5</td>
+              <td style="font-size:11px;color:#666;">2026-05-12 14:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.24);">
+              <td style="font-weight:700;font-size:14px;">PETRONET</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;269.00</td>
+              <td>&#8377;263.30</td>
+              <td><b>2.12%</b></td>
+              <td>33.4</td>
+              <td>28.2</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.22);">
+              <td style="font-weight:700;font-size:14px;">TATAINVEST</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;662.60</td>
+              <td>&#8377;679.50</td>
+              <td><b>2.55%</b></td>
+              <td>27.0</td>
+              <td>52.1</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.21);">
+              <td style="font-weight:700;font-size:14px;">VINATIORGA</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;1,287.70</td>
+              <td>&#8377;1,322.80</td>
+              <td><b>2.73%</b></td>
+              <td>28.7</td>
+              <td>42.3</td>
+              <td style="font-size:11px;color:#666;">2026-05-13 14:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.21);">
+              <td style="font-weight:700;font-size:14px;">SIEMENS</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;3,497.00</td>
+              <td>&#8377;3,595.80</td>
+              <td><b>2.83%</b></td>
+              <td>24.6</td>
+              <td>45.3</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 09:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.20);">
+              <td style="font-weight:700;font-size:14px;">BANDHANBNK</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;200.56</td>
+              <td>&#8377;194.46</td>
+              <td><b>3.04%</b></td>
+              <td>28.7</td>
+              <td>37.1</td>
+              <td style="font-size:11px;color:#666;">2026-05-11 10:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.19);">
+              <td style="font-weight:700;font-size:14px;">BAJAJHLDNG</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;9,980.00</td>
+              <td>&#8377;10,308.00</td>
+              <td><b>3.29%</b></td>
+              <td>25.2</td>
+              <td>48.6</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 09:15</td>
+            </tr>
+            <tr style="background:rgba(34,197,94,0.17);">
+              <td style="font-weight:700;font-size:14px;">JSL</td>
+              <td><span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BULLISH</span></td>
+              <td>&#8377;723.60</td>
+              <td>&#8377;749.50</td>
+              <td><b>3.58%</b></td>
+              <td>32.8</td>
+              <td>55.5</td>
+              <td style="font-size:11px;color:#666;">2026-05-13 14:15</td>
+            </tr></tbody>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-header bearish-header">
+    <span class="dot dot-red"></span>
+    <h2>Bearish Divergences (22)</h2>
+    <span style="margin-left:auto;font-size:12px;color:#f87171;">Price higher high &amp; RSI lower high &rarr; potential reversal down</span>
+  </div>
+  <table>
+    <thead><tr><th>Symbol</th><th>Signal</th><th>Origin Price</th><th>Current Price</th><th>Distance</th><th>RSI @ Origin</th><th>Current RSI</th><th>Pivot Time</th></tr></thead>
+    <tbody>
+            <tr style="background:rgba(239,68,68,0.34);">
+              <td style="font-weight:700;font-size:14px;">POLYCAB</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;9,192.00</td>
+              <td>&#8377;9,165.00</td>
+              <td><b>0.29%</b></td>
+              <td>74.4</td>
+              <td>58.4</td>
+              <td style="font-size:11px;color:#666;">2026-05-12 11:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.33);">
+              <td style="font-weight:700;font-size:14px;">CIPLA</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;1,436.50</td>
+              <td>&#8377;1,432.10</td>
+              <td><b>0.31%</b></td>
+              <td>76.7</td>
+              <td>70.9</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 14:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.32);">
+              <td style="font-weight:700;font-size:14px;">KANSAINER</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;223.42</td>
+              <td>&#8377;222.07</td>
+              <td><b>0.60%</b></td>
+              <td>68.0</td>
+              <td>57.1</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 09:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.32);">
+              <td style="font-weight:700;font-size:14px;">NATCOPHARM</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;1,206.50</td>
+              <td>&#8377;1,199.10</td>
+              <td><b>0.61%</b></td>
+              <td>66.0</td>
+              <td>54.1</td>
+              <td style="font-size:11px;color:#666;">2026-05-11 13:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.32);">
+              <td style="font-weight:700;font-size:14px;">POLYCAB</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;9,229.50</td>
+              <td>&#8377;9,165.00</td>
+              <td><b>0.70%</b></td>
+              <td>66.8</td>
+              <td>58.4</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 15:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.31);">
+              <td style="font-weight:700;font-size:14px;">OIL</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;523.00</td>
+              <td>&#8377;518.90</td>
+              <td><b>0.78%</b></td>
+              <td>77.6</td>
+              <td>66.3</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 13:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.28);">
+              <td style="font-weight:700;font-size:14px;">PAGEIND</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;37,365.00</td>
+              <td>&#8377;36,820.00</td>
+              <td><b>1.46%</b></td>
+              <td>59.2</td>
+              <td>63.8</td>
+              <td style="font-size:11px;color:#666;">2026-05-08 15:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.26);">
+              <td style="font-weight:700;font-size:14px;">DMART</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;4,439.00</td>
+              <td>&#8377;4,358.50</td>
+              <td><b>1.81%</b></td>
+              <td>74.4</td>
+              <td>51.5</td>
+              <td style="font-size:11px;color:#666;">2026-05-08 09:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.26);">
+              <td style="font-weight:700;font-size:14px;">TIMKEN</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;3,599.70</td>
+              <td>&#8377;3,531.20</td>
+              <td><b>1.90%</b></td>
+              <td>78.2</td>
+              <td>45.8</td>
+              <td style="font-size:11px;color:#666;">2026-05-08 11:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.25);">
+              <td style="font-weight:700;font-size:14px;">CROMPTON</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;296.35</td>
+              <td>&#8377;302.00</td>
+              <td><b>1.91%</b></td>
+              <td>78.3</td>
+              <td>72.5</td>
+              <td style="font-size:11px;color:#666;">2026-05-08 13:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.25);">
+              <td style="font-weight:700;font-size:14px;">GNFC</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;525.25</td>
+              <td>&#8377;514.35</td>
+              <td><b>2.08%</b></td>
+              <td>72.0</td>
+              <td>57.9</td>
+              <td style="font-size:11px;color:#666;">2026-05-15 09:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.24);">
+              <td style="font-weight:700;font-size:14px;">WELCORP</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;1,337.90</td>
+              <td>&#8377;1,309.00</td>
+              <td><b>2.16%</b></td>
+              <td>71.2</td>
+              <td>35.8</td>
+              <td style="font-size:11px;color:#666;">2026-05-12 09:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.22);">
+              <td style="font-weight:700;font-size:14px;">TIMKEN</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;3,625.10</td>
+              <td>&#8377;3,531.20</td>
+              <td><b>2.59%</b></td>
+              <td>69.2</td>
+              <td>45.8</td>
+              <td style="font-size:11px;color:#666;">2026-05-11 15:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.22);">
+              <td style="font-weight:700;font-size:14px;">GRANULES</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;757.50</td>
+              <td>&#8377;737.25</td>
+              <td><b>2.67%</b></td>
+              <td>68.8</td>
+              <td>49.0</td>
+              <td style="font-size:11px;color:#666;">2026-05-11 12:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.21);">
+              <td style="font-weight:700;font-size:14px;">TEAMLEASE</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;1,404.50</td>
+              <td>&#8377;1,364.60</td>
+              <td><b>2.84%</b></td>
+              <td>74.0</td>
+              <td>54.0</td>
+              <td style="font-size:11px;color:#666;">2026-05-12 09:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.19);">
+              <td style="font-weight:700;font-size:14px;">INDHOTEL</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;673.40</td>
+              <td>&#8377;652.05</td>
+              <td><b>3.17%</b></td>
+              <td>68.2</td>
+              <td>51.5</td>
+              <td style="font-size:11px;color:#666;">2026-05-08 14:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.18);">
+              <td style="font-weight:700;font-size:14px;">SCI</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;344.45</td>
+              <td>&#8377;332.75</td>
+              <td><b>3.40%</b></td>
+              <td>80.9</td>
+              <td>52.3</td>
+              <td style="font-size:11px;color:#666;">2026-05-11 10:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.16);">
+              <td style="font-weight:700;font-size:14px;">JKPAPER</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;394.85</td>
+              <td>&#8377;380.00</td>
+              <td><b>3.76%</b></td>
+              <td>82.6</td>
+              <td>49.7</td>
+              <td style="font-size:11px;color:#666;">2026-05-11 11:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.14);">
+              <td style="font-weight:700;font-size:14px;">NESTLEIND</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;1,497.00</td>
+              <td>&#8377;1,434.10</td>
+              <td><b>4.20%</b></td>
+              <td>72.5</td>
+              <td>28.8</td>
+              <td style="font-size:11px;color:#666;">2026-05-11 09:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.14);">
+              <td style="font-weight:700;font-size:14px;">JKPAPER</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;397.00</td>
+              <td>&#8377;380.00</td>
+              <td><b>4.28%</b></td>
+              <td>76.1</td>
+              <td>49.7</td>
+              <td style="font-size:11px;color:#666;">2026-05-12 10:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.13);">
+              <td style="font-weight:700;font-size:14px;">WELCORP</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;1,368.00</td>
+              <td>&#8377;1,309.00</td>
+              <td><b>4.31%</b></td>
+              <td>70.0</td>
+              <td>35.8</td>
+              <td style="font-size:11px;color:#666;">2026-05-14 15:15</td>
+            </tr>
+            <tr style="background:rgba(239,68,68,0.12);">
+              <td style="font-weight:700;font-size:14px;">PFC</td>
+              <td><span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">BEARISH</span></td>
+              <td>&#8377;465.00</td>
+              <td>&#8377;444.00</td>
+              <td><b>4.52%</b></td>
+              <td>69.8</td>
+              <td>43.3</td>
+              <td style="font-size:11px;color:#666;">2026-05-08 09:15</td>
+            </tr></tbody>
+  </table>
+</div>
+
+<div class="footer">
+  Generated by Nifty Midcap RSI Divergence Scanner &nbsp;&bull;&nbsp; Data via Yahoo Finance &nbsp;&bull;&nbsp; For informational purposes only, not investment advice.
+</div>
+</body>
+</html>
