@@ -85,47 +85,79 @@ def detect_divergence(df, symbol):
     current_rsi   = float(rsi.iloc[-1])
 
     ph, pl = find_pivots(prices, window=5)
-    results = []
+    n       = len(df)
+    RECENCY = 15   # pivot must be within last 15 candles (~2 trading days)
+    raw_results = []
 
     # ── BEARISH: price higher high, RSI lower high ───────────────────────────
     for i in range(1, len(ph)):
         i1, i2 = ph[i-1], ph[i]
+
+        # 1. Recency: second pivot must be recent
+        if i2 < n - RECENCY:
+            continue
+
         p1, p2 = float(prices.iloc[i1]), float(prices.iloc[i2])
         r1, r2 = float(rsi.iloc[i1]),   float(rsi.iloc[i2])
         if p2 > p1 and r2 < r1:                          # divergence confirmed
             origin = p2
-            dist   = abs(current_price - origin) / origin
-            if dist <= 0.05:                             # 5% filter
-                results.append({
+            # 2. Directional: bearish origin is a HIGH — if price already
+            #    fell >3%, divergence resolved; skip
+            if current_price < origin * 0.97:
+                continue
+            dist = abs(current_price - origin) / origin
+            if dist <= 0.05:                             # 3. 5% proximity
+                raw_results.append({
                     "Symbol":        symbol,
-                    "Signal":        "🔴 BEARISH",
+                    "Signal":        "BEARISH",
                     "Origin Price":  round(origin, 2),
                     "Current Price": round(current_price, 2),
-                    "Distance %":   round(dist * 100, 2),
+                    "Distance %":    round(dist * 100, 2),
                     "RSI @ Origin":  round(r2, 1),
                     "Current RSI":   round(current_rsi, 1),
                     "Pivot Time":    str(df.index[i2]),
+                    "_pivot_idx":    i2,
                 })
 
     # ── BULLISH: price lower low, RSI higher low ──────────────────────────────
     for i in range(1, len(pl)):
         i1, i2 = pl[i-1], pl[i]
+
+        # 1. Recency
+        if i2 < n - RECENCY:
+            continue
+
         p1, p2 = float(prices.iloc[i1]), float(prices.iloc[i2])
         r1, r2 = float(rsi.iloc[i1]),   float(rsi.iloc[i2])
         if p2 < p1 and r2 > r1:                          # divergence confirmed
             origin = p2
-            dist   = abs(current_price - origin) / origin
-            if dist <= 0.05:                             # 5% filter
-                results.append({
+            # 2. Directional: bullish origin is a LOW — if price already
+            #    rallied >3%, divergence resolved; skip
+            if current_price > origin * 1.03:
+                continue
+            dist = abs(current_price - origin) / origin
+            if dist <= 0.05:                             # 3. 5% proximity
+                raw_results.append({
                     "Symbol":        symbol,
-                    "Signal":        "🟢 BULLISH",
+                    "Signal":        "BULLISH",
                     "Origin Price":  round(origin, 2),
                     "Current Price": round(current_price, 2),
-                    "Distance %":   round(dist * 100, 2),
+                    "Distance %":    round(dist * 100, 2),
                     "RSI @ Origin":  round(r2, 1),
                     "Current RSI":   round(current_rsi, 1),
                     "Pivot Time":    str(df.index[i2]),
+                    "_pivot_idx":    i2,
                 })
+
+    # 4. Deduplicate: per symbol+signal keep only the MOST RECENT pivot
+    seen = {}
+    for r in raw_results:
+        key = (r["Symbol"], r["Signal"])
+        if key not in seen or r["_pivot_idx"] > seen[key]["_pivot_idx"]:
+            seen[key] = r
+    results = list(seen.values())
+    for r in results:
+        del r["_pivot_idx"]
 
     return results
 
