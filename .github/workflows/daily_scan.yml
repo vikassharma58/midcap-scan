@@ -36,6 +36,14 @@ jobs:
           git diff --cached --quiet || git commit -m "Daily scan: $(date +'%Y-%m-%d %H:%M IST')"
           git push
 
+      - name: Check email secrets
+        env:
+          GMAIL_USER:     ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASS: ${{ secrets.GMAIL_APP_PASS }}
+        run: |
+          if [ -z "$GMAIL_USER" ]; then echo "ERROR: GMAIL_USER is empty"; else echo "GMAIL_USER is set: $GMAIL_USER"; fi
+          if [ -z "$GMAIL_APP_PASS" ]; then echo "ERROR: GMAIL_APP_PASS is empty"; else echo "GMAIL_APP_PASS is set, length=${#GMAIL_APP_PASS}"; fi
+
       - name: Send email summary
         env:
           GMAIL_USER:     ${{ secrets.GMAIL_USER }}
