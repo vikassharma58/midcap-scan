@@ -19,9 +19,9 @@ BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
 CSV_PATH   = os.path.join(BASE_DIR, "divergence_results.csv")
 PAGES_URL  = "https://vikassharma58.github.io/midcap-scan/"
 
-GMAIL_USER = os.environ["GMAIL_USER"]
-GMAIL_PASS = os.environ["GMAIL_APP_PASS"]
-RECIPIENT  = os.environ.get("RECIPIENT", GMAIL_USER)
+GMAIL_USER = os.environ["GMAIL_USER"].strip()
+GMAIL_PASS = os.environ["GMAIL_APP_PASS"].strip()
+RECIPIENT  = os.environ.get("RECIPIENT", GMAIL_USER).strip()
 
 
 def load_results():

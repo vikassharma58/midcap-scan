@@ -42,7 +42,8 @@ jobs:
           GMAIL_APP_PASS: ${{ secrets.GMAIL_APP_PASS }}
         run: |
           if [ -z "$GMAIL_USER" ]; then echo "ERROR: GMAIL_USER is empty"; else echo "GMAIL_USER is set: $GMAIL_USER"; fi
-          if [ -z "$GMAIL_APP_PASS" ]; then echo "ERROR: GMAIL_APP_PASS is empty"; else echo "GMAIL_APP_PASS is set, length=${#GMAIL_APP_PASS}"; fi
+          TRIMMED=$(echo -n "$GMAIL_APP_PASS" | tr -d '[:space:]')
+          echo "GMAIL_APP_PASS raw_length=${#GMAIL_APP_PASS} trimmed_length=${#TRIMMED}"
 
       - name: Send email summary
         env:
