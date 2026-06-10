@@ -1,27 +1,23 @@
 """
-send_email.py — Sends daily divergence scan summary via Gmail SMTP.
+send_email.py — Sends daily divergence scan summary via Resend API.
 Called by GitHub Actions after scan.py completes.
 
 Requires env vars:
-  GMAIL_USER     — sender address (vikassharma58@gmail.com)
-  GMAIL_APP_PASS — Gmail App Password (16-char, no spaces)
-  RECIPIENT      — destination address (vikassharma58@gmail.com)
+  RESEND_API_KEY — API key from resend.com (free tier)
+  RECIPIENT      — destination address (default: vikassharma58@gmail.com)
 """
 
 import os
-import smtplib
 import csv
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+import requests
 from datetime import datetime
 
-BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
-CSV_PATH   = os.path.join(BASE_DIR, "divergence_results.csv")
-PAGES_URL  = "https://vikassharma58.github.io/midcap-scan/"
+BASE_DIR       = os.path.dirname(os.path.abspath(__file__))
+CSV_PATH       = os.path.join(BASE_DIR, "divergence_results.csv")
+PAGES_URL      = "https://vikassharma58.github.io/midcap-scan/"
 
-GMAIL_USER = os.environ["GMAIL_USER"].strip()
-GMAIL_PASS = os.environ["GMAIL_APP_PASS"].strip()
-RECIPIENT  = os.environ.get("RECIPIENT", GMAIL_USER).strip()
+RESEND_API_KEY = os.environ["RESEND_API_KEY"].strip()
+RECIPIENT      = os.environ.get("RECIPIENT", "vikassharma58@gmail.com").strip()
 
 
 def load_results():
@@ -167,25 +163,24 @@ def build_html(bullish, bearish):
 
 def send():
     bullish, bearish = load_results()
-    total = len(bullish) + len(bearish)
-    now   = datetime.now().strftime("%d %b %Y")
+    now     = datetime.now().strftime("%d %b %Y")
+    subject = f"Midcap RSI Scan — {now} | {len(bullish)} Bullish  {len(bearish)} Bearish"
 
-    subject = f"📊 Midcap RSI Scan — {now} | {len(bullish)} Bullish  {len(bearish)} Bearish"
-
-    msg = MIMEMultipart("alternative")
-    msg["Subject"] = subject
-    msg["From"]    = GMAIL_USER
-    msg["To"]      = RECIPIENT
-
-    # Plain-text fallback
-    plain = f"Midcap RSI Scan — {now}\n\nBullish: {len(bullish)}  Bearish: {len(bearish)}\n\nFull report: {PAGES_URL}"
-    msg.attach(MIMEText(plain, "plain"))
-    msg.attach(MIMEText(build_html(bullish, bearish), "html"))
-
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-        server.login(GMAIL_USER, GMAIL_PASS)
-        server.sendmail(GMAIL_USER, RECIPIENT, msg.as_string())
-
+    response = requests.post(
+        "https://api.resend.com/emails",
+        headers={
+            "Authorization": f"Bearer {RESEND_API_KEY}",
+            "Content-Type": "application/json",
+        },
+        json={
+            "from":    "Midcap Scan <onboarding@resend.dev>",
+            "to":      [RECIPIENT],
+            "subject": subject,
+            "html":    build_html(bullish, bearish),
+            "text":    f"Midcap RSI Scan — {now}\n\nBullish: {len(bullish)}  Bearish: {len(bearish)}\n\nFull report: {PAGES_URL}",
+        },
+    )
+    response.raise_for_status()
     print(f"Email sent to {RECIPIENT} — {len(bullish)} bullish, {len(bearish)} bearish signals")
 
 
